@@ -1,5 +1,5 @@
-import ProfilePage from "../components/ProfilePage";
+import ProfilePageV2 from "../components/ProfilePageV2";
 
 export default function Home() {
-  return <ProfilePage />;
+  return <ProfilePageV2 />;
 }
