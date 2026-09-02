@@ -8,14 +8,14 @@ const STATUSES=new Set(["online","idle","dnd","offline"]);
 const BADGES:[number,string,string][]=[
  [1,"Discord Staff","STAFF"],[2,"Partner","PARTNER"],[4,"HypeSquad Events","EVENTS"],[8,"Bug Hunter","BUG"],
  [16,"HypeSquad Online","HYPESQUAD"],[64,"HypeSquad Bravery","BRAVE"],[128,"HypeSquad Brilliance","BRILLIANT"],
- [256,"HypeSquad Balance","BALANCE"],[512,"Early Supporter","EARLY"],[1024,"Discord Certified Bot","CERTIFIED"],
+ [256,"HypeSquad Balance","BALANCE"],[512,"Early Supporter","EARLY"],[1024,"Team User","TEAM"],
  [16384,"Bug Hunter Gold","BUG+"],[65536,"Verified Bot","VERIFIED"],[131072,"Early Verified Bot Developer","DEV"],
  [262144,"Certified Moderator","MOD"],[524288,"Bot HTTP Interactions","BOT"],[4194304,"Active Developer","ACTIVE"]
 ];
 
 async function get(url:string){
  try{
-  const r=await fetch(url,{cache:"no-store",headers:{Accept:"application/json","User-Agent":"discord-profile-site/6.0"}});
+  const r=await fetch(url,{cache:"no-store",headers:{Accept:"application/json","User-Agent":"discord-profile-site/7.0"}});
   if(!r.ok)return null;
   return await r.json();
  }catch{return null}
@@ -28,16 +28,18 @@ function flagsToBadges(flags:unknown):Badge[]{
  const n=numberValue(flags);if(n===undefined)return [];
  return BADGES.filter(([bit])=>(n&bit)===bit).map(([bit,label,short])=>({id:String(bit),label,short}));
 }
-function normalizeBadges(value:unknown,flags:unknown):Badge[]{
- const fromFlags=flagsToBadges(flags);
- if(!Array.isArray(value))return fromFlags;
- const normalized=value.map((b:any,i)=>{
+function normalizeBadges(value:unknown,flags:unknown,premiumType:unknown):Badge[]{
+ const normalized=Array.isArray(value)?value.map((b:any,i)=>{
   if(typeof b==="string")return {id:b,label:b,short:b.slice(0,10).toUpperCase()};
   const label=stringValue(b?.label,b?.name,b?.description,b?.text,b?.title);
   return label?{id:String(b?.id||b?.name||i),label,short:String(b?.short||label).slice(0,10).toUpperCase()}:null;
- }).filter(Boolean) as Badge[];
+ }).filter(Boolean) as Badge[]:[];
+ const fromFlags=flagsToBadges(flags);
  const seen=new Set(normalized.map(x=>x.label));
- return [...normalized,...fromFlags.filter(x=>!seen.has(x.label))];
+ const merged=[...normalized,...fromFlags.filter(x=>!seen.has(x.label))];
+ const premium=numberValue(premiumType);
+ if(premium&&premium>0&&!merged.some(x=>x.label.toLowerCase()==="discord nitro"))merged.unshift({id:"nitro",label:"Discord Nitro",short:"NITRO"});
+ return merged;
 }
 function decorationUrl(v:any){const direct=imageUrl(v);if(direct)return direct;const asset=objectId(v);return asset?`https://cdn.discordapp.com/avatar-decoration-presets/${asset}.png?size=512`:null}
 function avatarFromHash(id:string,hash:string|null){if(!hash)return null;return `https://cdn.discordapp.com/avatars/${id}/${hash}.${hash.startsWith("a_")?"gif":"webp"}?size=1024`}
@@ -57,26 +59,29 @@ export async function GET(req:Request,ctx:{params:Promise<{id:string}>}){
  let source=data?"lanyard":"public-profile";
  if(!data&&lantern){
   const m=lantern.metadata||{};
-  data={discord_status:STATUSES.has(lantern.status)?lantern.status:"offline",discord_user:{id,username:m.username,global_name:m.global_name,avatar:m.avatar||null,public_flags:numberValue(m.flags?.bitfield,m.public_flags),accent_color:m.accent_color||null,avatar_decoration_data:m.avatar_decoration_data||m.avatar_decoration||null},activities:Array.isArray(lantern.activities)?lantern.activities:[]};
+  data={discord_status:STATUSES.has(lantern.status)?lantern.status:"offline",discord_user:{id,username:m.username,global_name:m.global_name,avatar:m.avatar||null,public_flags:numberValue(m.flags?.bitfield,m.public_flags),premium_type:numberValue(m.premium_type,m.premium?.type),accent_color:m.accent_color||null,avatar_decoration_data:m.avatar_decoration_data||m.avatar_decoration||null},activities:Array.isArray(lantern.activities)?lantern.activities:[]};
   source="lantern";
  }
  if(!data)data={discord_status:"offline",discord_user:{id},activities:[]};
  const c=cyan||{},l=lookup||{};
+ const du=data.discord_user||{};
  const avatarLink=stringValue(c.avatarUrl,c.avatar_url,c.display_avatar_url,imageUrl(c.avatar),imageUrl(l.avatar));
  const bannerLink=stringValue(c.bannerUrl,c.banner_url,imageUrl(c.banner),imageUrl(l.banner));
- const avatarHash=stringValue(objectId(data.discord_user?.avatar),objectId(c.avatar),objectId(l.avatar));
- const bannerHash=stringValue(objectId(data.discord_user?.banner),objectId(c.banner),objectId(l.banner));
- const decoration=data.discord_user?.avatar_decoration_data||c.avatar_decoration_data||c.avatar_decoration||l.avatar_decoration_data||l.avatar_decoration||null;
- const flags=numberValue(data.discord_user?.public_flags,c.public_flags,l.public_flags,l.flags?.bitfield);
- const badges=normalizeBadges(c.badges||l.badges,flags);
- const username=stringValue(data.discord_user?.username,c.username,l.username)||usernameHint||null;
- const globalName=stringValue(data.discord_user?.global_name,c.display_name,l.display_name)||null;
- data.discord_user={...data.discord_user,id,username,global_name:globalName,avatar:avatarHash,banner:bannerHash,public_flags:flags,accent_color:data.discord_user?.accent_color??c.accent_color??l.accent_color??null,avatar_decoration_data:decoration?{asset:objectId(decoration),sku_id:decoration?.sku_id||decoration?.skuId||null}:null};
+ const avatarHash=stringValue(objectId(du.avatar),objectId(c.avatar),objectId(l.avatar));
+ const bannerHash=stringValue(objectId(du.banner),objectId(c.banner),objectId(l.banner));
+ const decoration=du.avatar_decoration_data||c.avatar_decoration_data||c.avatar_decoration||l.avatar_decoration_data||l.avatar_decoration||null;
+ const flags=numberValue(du.public_flags,c.public_flags,l.public_flags,l.flags?.bitfield);
+ const premiumType=numberValue(du.premium_type,c.premium_type,l.premium_type);
+ const badges=normalizeBadges(c.badges||l.badges,flags,premiumType);
+ const username=stringValue(du.username,c.username,l.username)||usernameHint||null;
+ const globalName=stringValue(du.global_name,c.display_name,l.display_name)||null;
+ data.discord_user={...du,id,username,global_name:globalName,avatar:avatarHash,banner:bannerHash,public_flags:flags,premium_type:premiumType,accent_color:du.accent_color??c.accent_color??l.accent_color??null,avatar_decoration_data:decoration?{asset:objectId(decoration),sku_id:decoration?.sku_id||decoration?.skuId||null}:null};
  const resolvedAvatar=avatarLink||avatarFromHash(id,avatarHash)||`https://api.lanyard.rest/${id}.webp?size=1024`;
  const resolvedBanner=bannerLink||bannerFromHash(id,bannerHash);
  const resolvedDecoration=decorationUrl(decoration);
  const realtime=Boolean(lanyard?.data);
  const status=STATUSES.has(data.discord_status)?data.discord_status:"offline";
  const usernameMatches=!usernameHint||!username||username.toLowerCase()===usernameHint.toLowerCase().replace(/^@/,"");
- return NextResponse.json({success:true,data,profile:{avatarUrl:resolvedAvatar,bannerUrl:resolvedBanner,avatarDecorationUrl:resolvedDecoration,badges,source,monitored:Boolean(lanyard?.data||lantern),realtime,status,usernameMatches,usernameHint,lastChecked:new Date().toISOString()}},{headers:{"Cache-Control":"no-store, max-age=0"}});
+ const badgesAvailable=badges.length>0;
+ return NextResponse.json({success:true,data,profile:{avatarUrl:resolvedAvatar,bannerUrl:resolvedBanner,avatarDecorationUrl:resolvedDecoration,badges,badgesAvailable,badgeSource:badgesAvailable?"discord-public-flags":"private-or-unavailable",source,monitored:Boolean(lanyard?.data||lantern),realtime,status,usernameMatches,usernameHint,lastChecked:new Date().toISOString()}},{headers:{"Cache-Control":"no-store, max-age=0"}});
 }
