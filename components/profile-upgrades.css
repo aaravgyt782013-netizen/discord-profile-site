@@ -1,0 +1,75 @@
+/* Final UI polish: prevent icon/text collisions and improve navigation */
+.heroButtons a[href*="discord.gg"]{font-size:13px!important;display:inline-flex!important;align-items:center!important;gap:9px!important;white-space:nowrap!important}
+.heroButtons a[href*="discord.gg"]:before{display:none!important;content:none!important}
+.heroButtons a[href*="discord.gg"] .brandMark{display:inline-grid!important;flex:0 0 20px!important;width:20px!important;height:20px!important}
+
+.drawer{width:min(430px,92vw)!important;padding:30px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+.drawer::before{content:"";position:absolute;inset:0 0 auto;height:180px;pointer-events:none;background:radial-gradient(circle at 80% 0,#8b7cff24,transparent 62%)}
+.drawerProfile{position:relative;z-index:1;margin-top:58px!important;padding:18px!important;border:1px solid #ffffff12!important;border-radius:22px!important;background:linear-gradient(135deg,#ffffff0b,#ffffff03)!important;box-shadow:inset 0 1px #ffffff08,0 20px 60px #0007!important}
+.drawerProfile img{width:64px!important;height:64px!important;flex:none!important}
+.drawerProfile strong{font-size:18px!important;letter-spacing:-.03em}
+.drawerProfile span{font-size:11px!important}
+.drawerTitle{position:relative;z-index:1;margin:24px 10px 9px!important;color:#777!important;font-size:8px!important}
+.drawer nav{position:relative;z-index:1;gap:8px!important}
+.drawer nav a{min-height:52px!important;padding:12px 14px!important;gap:12px!important;background:#ffffff03!important;border-color:#ffffff08!important}
+.drawer nav a:hover{background:linear-gradient(90deg,#ffffff0e,#ffffff04)!important;border-color:#ffffff18!important;transform:translateX(4px)!important;box-shadow:0 10px 35px #0006!important}
+.drawer nav a>span:first-child{flex:0 0 30px!important;color:#555!important;font-size:9px!important;font-weight:900!important;letter-spacing:.12em}
+.drawer nav a>span:not(:first-child){flex:1!important;min-width:0!important}
+.drawer nav a .brandMark{flex:0 0 23px!important;width:23px!important;height:23px!important}
+.drawer nav a b{flex:0 0 auto!important}
+
+/* Social/brand icons: every item gets its own non-overlapping box. */
+.socials{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:16px!important}
+.socialCard{min-width:0!important;overflow:hidden!important}
+.socialCard>span{flex:0 0 50px!important;width:50px!important;height:50px!important}
+.socialCard div{min-width:0!important;overflow:hidden!important}
+.socialCard strong,.socialCard small{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+
+/* Upload tabs should never inherit brand-card sizing. */
+.uploadTabs{display:flex!important;align-items:center!important;gap:10px!important}
+.uploadTabs button{position:relative!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;min-width:118px!important;flex:0 0 auto!important;font-size:11px!important;white-space:nowrap!important}
+.uploadTabs button .brandMark{display:inline-grid!important;flex:0 0 18px!important;width:18px!important;height:18px!important}
+
+/* Fixed bottom dock: isolated columns stop YouTube/Instagram/GitHub from merging. */
+.bottomBar{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;align-items:center!important;gap:13px!important;width:min(760px,calc(100vw - 24px))!important;padding:10px 14px!important;overflow:visible!important}
+.bottomBar>*{min-width:0!important}
+.bottomPic{flex:0 0 47px!important;width:47px!important}
+.bottomBar>div{min-width:0!important}
+.bottomBar a{white-space:nowrap!important}
+.bottomBar .brandMark{display:inline-grid!important;place-items:center!important;flex:0 0 22px!important;width:22px!important;height:22px!important}
+.bottomBar>a{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-width:92px!important;height:42px!important;padding:0 11px!important;border:1px solid #ffffff12!important;border-radius:13px!important;background:#ffffff05!important;overflow:hidden!important}
+.bottomBar>a[href*="discord.gg"]{font-size:11px!important}
+.bottomBar>a[href*="discord.gg"]:before{display:none!important;content:none!important}
+.bottomBar>a[href*="discord.gg"] .brandMark{display:inline-grid!important}
+.bottomBar>a[href*="github"]:before,.bottomBar>a[href*="youtube"]:before,.bottomBar>a[href*="instagram"]:before,.bottomBar>a[href*="x.com"]:before{display:none!important}
+
+/* If the bottom dock contains a social cluster, keep each link separate. */
+.bottomBar .socialLinks,.bottomBar .bottomSocials{display:flex!important;align-items:center!important;gap:8px!important;min-width:0!important;overflow-x:auto!important;scrollbar-width:none!important}
+.bottomBar .socialLinks::-webkit-scrollbar,.bottomBar .bottomSocials::-webkit-scrollbar{display:none}
+.bottomBar .socialLinks>a,.bottomBar .bottomSocials>a{flex:0 0 auto!important}
+
+/* Mobile: make the dock and cards breathe instead of stacking into each other. */
+@media(max-width:760px){
+ .rebuildPage{padding-left:14px!important;padding-right:14px!important}
+ .rebuildTop{padding-right:62px!important}
+ .tracking{max-width:48vw!important;overflow:hidden!important;white-space:nowrap!important;text-overflow:ellipsis!important}
+ .rebuildHero{grid-template-columns:1fr!important;gap:54px!important;margin-top:72px!important;margin-bottom:105px!important}
+ .heroText h1{font-size:clamp(54px,18vw,92px)!important}
+ .tagline{font-size:20px!important}
+ .discordCard{padding-left:19px!important;padding-right:19px!important}
+ .cardBanner{margin-left:-19px!important;margin-right:-19px!important}
+ .workGrid,.socials{grid-template-columns:1fr!important}
+ .upload>img{width:115px!important;height:82px!important;flex:0 0 115px!important}
+ .upload{gap:12px!important}
+ .upload h3{font-size:15px!important}
+ .sectionHead h2{font-size:35px!important}
+ .bottomBar{grid-template-columns:auto minmax(0,1fr)!important;bottom:10px!important;border-radius:18px!important}
+ .bottomBar>a{display:none!important}
+ .bottomBar .socialLinks,.bottomBar .bottomSocials{grid-column:2;max-width:100%;}
+}
+@media(max-width:420px){
+ .drawerTrigger{right:14px!important;top:82px!important;width:48px!important;height:48px!important}
+ .tracking{font-size:8px!important;letter-spacing:.08em!important}
+ .tinyFacts{gap:13px!important;flex-wrap:wrap!important}
+ .upload>img{width:92px!important;height:70px!important;flex-basis:92px!important}
+}
