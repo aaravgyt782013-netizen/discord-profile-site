@@ -1,0 +1,21 @@
+/* Final visual fixes: app emojis, no icon glow, richer background, responsive gender row. */
+.rebuildPage{background:#04050b;isolation:isolate}
+.aurora{inset:0;filter:none;overflow:hidden;opacity:.72}
+.aurora i{width:42vw;height:42vw;filter:blur(70px);opacity:.16;animation:aurora 20s ease-in-out infinite}
+.stars{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.55;background-image:radial-gradient(circle at 12% 20%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 72% 12%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 86% 66%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 28% 78%,#fff 0 1px,transparent 1.5px),radial-gradient(circle at 52% 42%,#fff 0 1px,transparent 1.5px);background-size:280px 240px,340px 300px,310px 270px,370px 320px,420px 360px;animation:starsMove 35s linear infinite}
+@keyframes starsMove{to{transform:translate3d(25px,18px,0)}}
+.gridNoise{opacity:.12;background-size:110px 110px}
+.identity img,.drawerProfile img,.mainAvatar{box-shadow:0 25px 70px #000b}
+.liveDot.online,.liveDot.idle,.liveDot.dnd{box-shadow:none}
+.cardStatus.online,.cardStatus.idle,.cardStatus.dnd{box-shadow:none}
+.brandIcon{filter:none!important;box-shadow:none!important}
+.brandIcon:hover{filter:none!important}
+.socialCard>span{box-shadow:none!important}
+.socialCard:nth-child(1)>span,.socialCard:nth-child(2)>span,.socialCard:nth-child(3)>span,.socialCard:nth-child(4)>span{filter:none!important}
+.uploadTabs{display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap}
+.uploadTab{font-size:12px}
+.statsFour{grid-template-columns:repeat(4,1fr)}
+.statsFour div{min-width:0}
+.statsFour b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:900px){.rebuildPage{padding-left:15px;padding-right:15px}.rebuildHero{grid-template-columns:1fr;gap:55px;margin-top:70px}.heroText h1{font-size:clamp(58px,17vw,105px)}.discordCard{max-width:560px;width:100%;margin:auto}.workGrid{grid-template-columns:1fr 1fr}.socials{grid-template-columns:1fr}.tracking{display:none}.drawerTrigger{right:15px;top:78px}.statsFour{grid-template-columns:repeat(2,1fr);row-gap:15px}.statsFour div:nth-child(2){border-right:0}.upload>img{width:170px;height:105px}}
+@media(max-width:560px){.rebuildPage{padding-bottom:105px}.rebuildHero{margin-bottom:90px}.heroText{padding-right:5px}.tagline{font-size:20px}.bio{font-size:13px}.discordCard{padding-left:18px;padding-right:18px;border-radius:24px}.cardBanner{margin-left:-18px;margin-right:-18px;height:155px;border-radius:24px 24px 0 0}.avatarDock{width:128px;height:128px;margin-top:-64px}.mainAvatar{width:128px;height:128px}.frame{width:145px;height:145px;inset:-8px}.decoration{width:160px;height:160px;inset:-16px}.cardName h2{font-size:27px}.workGrid{grid-template-columns:1fr}.sectionHead h2{font-size:35px}.upload{align-items:flex-start}.upload>img{width:110px;height:85px}.upload h3{font-size:15px}.upload p{font-size:9px}.bottomBar{bottom:10px;min-height:62px}.bottomBar>a{width:38px;height:38px}.bottomPic,.bottomPic>img:first-child{width:42px;height:42px}.bottomInfo span{font-size:9px}}
