@@ -14,13 +14,14 @@ async function youtube(url:string){
 }
 async function instagram(url:string){
  if(!url)return null;
- try{const html=await text(url.replace(/\/$/,"/"));if(!html)return null;
-  // Public Instagram pages expose OpenGraph metadata and, when available, the canonical post URL.
-  const canonical=meta(html,"og:url")||html.match(/https:\/\/www\.instagram\.com\/(?:p|reel)\/[A-Za-z0-9_-]+\/?/)?.[0]||"";
-  const post=canonical.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/)?.[1];
-  if(!post)return null;
-  const title=meta(html,"og:title")||"Latest Instagram upload";const thumbnail=meta(html,"og:image")||"";
-  return {url:canonical, title, thumbnail, platform:"Instagram", views:"",comments:"",likes:"",date:""};
+ try{
+  const match=url.match(/instagram\.com\/(?:@)?([^/?#]+)/i);const username=match?.[1]?.replace(/^@/,"");if(!username||["p","reel","tv","explore"].includes(username))return null;
+  const api=await text(`https://www.instagram.com/api/v1/users/web_profile_info/?username=${encodeURIComponent(username)}`);
+  if(api){const json=JSON.parse(api);const user=json?.data?.user;const item=user?.edge_owner_to_timeline_media?.edges?.[0]?.node;if(item){const code=item.shortcode||item.code;const isVideo=Boolean(item.is_video);return {url:`https://www.instagram.com/${isVideo?"reel":"p"}/${code}/`,title:item.edge_media_to_caption?.edges?.[0]?.node?.text?.split("\n")[0]||"Latest Instagram upload",thumbnail:item.display_url||item.thumbnail_src||"",platform:"Instagram",views:"",comments:String(item.edge_media_to_comment?.count??""),likes:String(item.edge_liked_by?.count??""),date:item.taken_at_timestamp?new Date(item.taken_at_timestamp*1000).toISOString().slice(0,10):""};}}
+  }
+  const html=await text(`https://www.instagram.com/${username}/`);if(!html)return null;
+  const canonical=meta(html,"og:url");const post=canonical.match(/instagram\.com\/(?:p|reel)\/([A-Za-z0-9_-]+)/)?.[1];if(!post)return null;
+  return {url:canonical,title:meta(html,"og:title")||"Latest Instagram upload",thumbnail:meta(html,"og:image")||"",platform:"Instagram",views:"",comments:"",likes:"",date:""};
  }catch{return null}
 }
 export async function GET(){
