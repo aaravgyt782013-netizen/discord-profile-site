@@ -1,0 +1,21 @@
+/* Final visual layer: inspired by modern creator/profile dashboards, not a direct copy. */
+.profileV5{min-height:100vh;overflow-x:hidden}
+.profileV5 .v5StatusDot,.profileV5 .v5StatusDot.online,.profileV5 .v5StatusDot.idle,.profileV5 .v5StatusDot.dnd,.profileV5 .v5StatusDot.offline{background:#35e889!important;box-shadow:0 0 0 3px rgba(53,232,137,.08),0 0 18px rgba(53,232,137,.7)!important}
+.v5Connection>b{font-size:0!important;color:#65f0a1!important}.v5Connection>b:after{content:"ONLINE";font-size:12px;letter-spacing:.12em}
+.v5Connection>span{font-size:0!important}.v5Connection>span:after{content:"ALWAYS ONLINE";font-size:10px;letter-spacing:.1em;color:#8f8b9e}
+.v5HeroCopy .v5Eyebrow{letter-spacing:.12em}
+.v5HeroCopy .v5Eyebrow>span{opacity:.35}
+.v5Card,.v5GithubCard,.v5WorkGrid article,.v5SocialCard,.v5UploadCard{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.v5Card:hover{transform:translateY(-3px);transition:transform .35s ease,box-shadow .35s ease;box-shadow:0 45px 120px rgba(0,0,0,.6),0 0 55px rgba(139,124,255,.12)}
+.v5CardAvatar .v5Avatar{position:relative}.v5CardAvatar .v5Avatar:before{content:"";position:absolute;inset:-8px;border:1px solid rgba(255,255,255,.12);border-radius:inherit;box-shadow:0 0 35px rgba(139,124,255,.15);pointer-events:none}
+.v5BadgeBox{position:relative;overflow:hidden}.v5BadgeBox:before{content:"";position:absolute;width:180px;height:180px;right:-80px;top:-100px;background:rgba(139,124,255,.14);filter:blur(35px);pointer-events:none}
+.v5BadgeBox p{font-size:0!important;color:#777383}.v5BadgeBox p:after{content:"No public badges are exposed by the connected Discord profile right now. Private badges are never guessed or fabricated.";font-size:12px;line-height:1.65;display:block}
+.v5BadgeIcon{transition:transform .2s ease,filter .2s ease}.v5BadgeIcon:hover{transform:translateY(-2px) scale(1.05);filter:brightness(1.25)}
+.v5SectionTitle{position:relative}.v5SectionTitle:after{content:"";display:block;width:64px;height:2px;margin-top:18px;background:linear-gradient(90deg,#9a89ff,transparent);box-shadow:0 0 18px rgba(154,137,255,.55)}
+.v5GithubCard{border:1px solid rgba(255,255,255,.1)!important}
+.v5GithubHead>a,.v5SocialCard a,.v5UploadCard a{transition:transform .2s ease,color .2s ease}.v5GithubHead>a:hover{transform:translateX(3px)}
+.v5Facts>div,.v5MetaGrid>div{transition:background .25s ease,border-color .25s ease,transform .25s ease}.v5Facts>div:hover,.v5MetaGrid>div:hover{transform:translateY(-2px);background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.12)}
+.v5WorkGrid article,.v5SocialCard,.v5UploadCard{position:relative;overflow:hidden}.v5WorkGrid article:before,.v5SocialCard:before,.v5UploadCard:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,145,255,.65),transparent);opacity:.45}
+.profileV5:after{content:"";position:fixed;inset:auto 0 0;height:180px;pointer-events:none;z-index:0;background:linear-gradient(to top,rgba(5,5,9,.95),transparent);opacity:.7}
+.v5Top,.v5Hero,.v5Section,.v5Footer,.v5Bottom{position:relative;z-index:1}
+@media(max-width:650px){.v5Connection em{display:none}.v5Connection{gap:5px}.v5HeroCopy .v5Tagline{max-width:34rem}.v5Facts{grid-template-columns:repeat(2,minmax(0,1fr))}.v5BadgeList{gap:8px}.v5MetaGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
