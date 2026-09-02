@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "../components/profile-rebuild.css";
+import "../components/upload-tabs.css";
 
 const title = process.env.NEXT_PUBLIC_SITE_TITLE || process.env.NEXT_PUBLIC_NAME || "Profile";
 const description = process.env.NEXT_PUBLIC_SITE_DESCRIPTION || process.env.NEXT_PUBLIC_BIO || "Personal profile website.";
