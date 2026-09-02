@@ -3,4 +3,5 @@ import ProfileEnhancements from "../components/ProfileEnhancements";
 import AlwaysOnline from "../components/AlwaysOnline";
 import "../components/profile-enhancements.css";
 import "../components/profile-wow.css";
+import "../components/profile-badge-polish.css";
 export default function Home(){return <><ProfilePageV4/><ProfileEnhancements/><AlwaysOnline/></>}
