@@ -1,0 +1,9 @@
+"use client";
+import {useEffect,useState} from "react";
+export default function ProfileEnhancements(){
+ const[g,setG]=useState<any>();const[p,setP]=useState<any>();const github=process.env.NEXT_PUBLIC_GITHUB_URL||"";const id=process.env.NEXT_PUBLIC_DISCORD_ID||"";
+ useEffect(()=>{if(github)fetch(`/api/github?url=${encodeURIComponent(github)}&t=${Date.now()}`).then(r=>r.json()).then(x=>setG(x.github)).catch(()=>{})},[github]);
+ useEffect(()=>{if(!id)return;const load=()=>fetch(`/api/profile/${id}?t=${Date.now()}`,{cache:"no-store"}).then(r=>r.json()).then(setP).catch(()=>{});load();const t=setInterval(load,5000);return()=>clearInterval(t)},[id]);
+ const badges=p?.profile?.badges||[];if(!g&&!badges.length)return null;
+ return <div className="profileEnhancements">{badges.length>0&&<section className="enhancedBadges"><div className="enhancedTitle"><span>DISCORD IDENTITY</span><b>{badges.length} public badges</b></div><div className="enhancedBadgeGrid">{badges.map((b:any,i:number)=><div className="enhancedBadge" key={b.id}><strong>{["◆","✦","◈","◇","●","✧"][i%6]}</strong><div><b>{b.label}</b><span>{b.short}</span></div></div>)}</div></section>}{g&&<section className="enhancedGithub"><div className="enhancedGhHead"><img src={g.avatarUrl} alt="GitHub"/><div><small>CONNECTED GITHUB</small><h2>{g.name}</h2><span>@{g.login}</span></div><a href={g.profileUrl} target="_blank" rel="noreferrer">View profile ↗</a></div><p>{g.bio||"Open-source projects, experiments and code."}</p><div className="enhancedGhStats"><b>{g.publicRepos}<small>REPOSITORIES</small></b><b>{g.followers}<small>FOLLOWERS</small></b><b>{g.following}<small>FOLLOWING</small></b></div>{g.repositories?.length>0&&<div className="enhancedRepos">{g.repositories.map((r:any)=><a href={r.url} target="_blank" rel="noreferrer" key={r.name}><b>{r.name}</b><span>{r.language||"CODE"} · ★ {r.stars}</span><p>{r.description||"No description"}</p></a>)}</div>}</section>}</div>;
+}
