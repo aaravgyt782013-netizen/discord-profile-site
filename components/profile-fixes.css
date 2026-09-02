@@ -17,5 +17,42 @@
 .statsFour{grid-template-columns:repeat(4,1fr)}
 .statsFour div{min-width:0}
 .statsFour b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:900px){.rebuildPage{padding-left:15px;padding-right:15px}.rebuildHero{grid-template-columns:1fr;gap:55px;margin-top:70px}.heroText h1{font-size:clamp(58px,17vw,105px)}.discordCard{max-width:560px;width:100%;margin:auto}.workGrid{grid-template-columns:1fr 1fr}.socials{grid-template-columns:1fr}.tracking{display:none}.drawerTrigger{right:15px;top:78px}.statsFour{grid-template-columns:repeat(2,1fr);row-gap:15px}.statsFour div:nth-child(2){border-right:0}.upload>img{width:170px;height:105px}}
-@media(max-width:560px){.rebuildPage{padding-bottom:105px}.rebuildHero{margin-bottom:90px}.heroText{padding-right:5px}.tagline{font-size:20px}.bio{font-size:13px}.discordCard{padding-left:18px;padding-right:18px;border-radius:24px}.cardBanner{margin-left:-18px;margin-right:-18px;height:155px;border-radius:24px 24px 0 0}.avatarDock{width:128px;height:128px;margin-top:-64px}.mainAvatar{width:128px;height:128px}.frame{width:145px;height:145px;inset:-8px}.decoration{width:160px;height:160px;inset:-16px}.cardName h2{font-size:27px}.workGrid{grid-template-columns:1fr}.sectionHead h2{font-size:35px}.upload{align-items:flex-start}.upload>img{width:110px;height:85px}.upload h3{font-size:15px}.upload p{font-size:9px}.bottomBar{bottom:10px;min-height:62px}.bottomBar>a{width:38px;height:38px}.bottomPic,.bottomPic>img:first-child{width:42px;height:42px}.bottomInfo span{font-size:9px}}
+
+/* Discord CTA: real icon from the existing brand-mark, with plain black label. */
+.heroButtons a[href*="discord.gg"]{font-size:13px!important;color:#050509!important;display:inline-flex!important;align-items:center!important;gap:9px!important}
+.heroButtons a[href*="discord.gg"]:before{display:none!important;content:none!important}
+.heroButtons a[href*="discord.gg"] .brand-discord{display:inline-block!important;width:19px!important;height:19px!important;flex:none!important;background-repeat:no-repeat!important;background-position:center!important;background-size:contain!important}
+.brand-discord{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23050509'%3E%3Cpath d='M19.54 5.1A16.1 16.1 0 0 0 15.5 3.8l-.5 1.03a14.3 14.3 0 0 0-6 0L8.5 3.8a16.1 16.1 0 0 0-4.04 1.3C1.9 9.03 1.2 12.7 1.55 16.32a16.2 16.2 0 0 0 4.95 2.5l1.2-1.65a9.6 9.6 0 0 1-1.9-.92l.47-.36c3.67 1.7 7.65 1.7 11.27 0l.48.36c-.6.36-1.24.67-1.9.92l1.2 1.65a16.1 16.1 0 0 0 4.95-2.5c.4-4.2-.67-7.83-2.73-11.22ZM8.5 14.45c-1.08 0-1.97-1-1.97-2.23s.87-2.23 1.97-2.23 1.98 1 1.97 2.23c0 1.23-.87 2.23-1.97 2.23Zm7 0c-1.08 0-1.97-1-1.97-2.23s.87-2.23 1.97-2.23 1.98 1 1.97 2.23c0 1.23-.87 2.23-1.97 2.23Z'/%3E%3C/svg%3E")!important}
+
+/* Sidebar: each navigation row gets its own compact icon slot. */
+.drawer nav a{min-height:54px;padding:11px 13px!important;gap:12px!important}
+.drawer nav a>span:first-child{flex:none!important;width:34px!important;height:34px!important;display:grid!important;place-items:center!important;border-radius:11px!important;background:#ffffff08!important;border:1px solid #ffffff10!important;color:#777!important;font-size:0!important;background-repeat:no-repeat!important;background-position:center!important;background-size:17px!important}
+.drawer nav a[href="#home"]>span:first-child{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='m12 3 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1V10l9-7Z'/%3E%3C/svg%3E")!important}
+.drawer nav a[href*="discord.gg"]>span:first-child{background-size:18px!important;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M19.54 5.1A16.1 16.1 0 0 0 15.5 3.8l-.5 1.03a14.3 14.3 0 0 0-6 0L8.5 3.8a16.1 16.1 0 0 0-4.04 1.3C1.9 9.03 1.2 12.7 1.55 16.32a16.2 16.2 0 0 0 4.95 2.5l1.2-1.65a9.6 9.6 0 0 1-1.9-.92l.47-.36c3.67 1.7 7.65 1.7 11.27 0l.48.36c-.6.36-1.24.67-1.9.92l1.2 1.65a16.1 16.1 0 0 0 4.95-2.5c.4-4.2-.67-7.83-2.73-11.22ZM8.5 14.45c-1.08 0-1.97-1-1.97-2.23s.87-2.23 1.97-2.23 1.98 1 1.97 2.23c0 1.23-.87 2.23-1.97 2.23Zm7 0c-1.08 0-1.97-1-1.97-2.23s.87-2.23 1.97-2.23 1.98 1 1.97 2.23c0 1.23-.87 2.23-1.97 2.23Z'/%3E%3C/svg%3E")!important}
+.drawer nav a[href="#work"]>span:first-child{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8'%3E%3Cpath d='M4 19V9m6 10V5m6 14v-7m4 7V3'/%3E%3C/svg%3E")!important}
+.drawer nav a[href="#uploads"]>span:first-child{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='1.8'%3E%3Cpath d='M12 16V4m0 0-4 4m4-4 4 4M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5'/%3E%3C/svg%3E")!important}
+.drawer nav a>.brandMark{flex:none!important;width:34px!important;height:34px!important;border-radius:11px!important;background-color:#ffffff08!important;border:1px solid #ffffff10!important;background-size:17px!important}
+.drawer nav a>.brandMark~span{flex:1!important}
+.drawer nav a b{margin-left:auto!important;flex:none!important}
+.drawerTitle{margin-top:20px!important}
+
+/* Bottom socials: fixed-width icon buttons so no platform can collide with another. */
+.bottomBar{gap:10px!important;padding:10px 12px!important;overflow:hidden!important}
+.bottomBar>a{flex:0 0 44px!important;width:44px!important;height:44px!important;padding:0!important}
+.bottomBar>a .brandMark{display:block!important;width:20px!important;height:20px!important;flex:none!important}
+.bottomBar>a[href*="discord.gg"]{font-size:0!important}
+.bottomBar>a[href*="discord.gg"]:before{display:none!important}
+.bottomBar>a[href*="discord.gg"] .brandMark{display:block!important}
+.bottomBar .bottomInfo{min-width:0!important;overflow:hidden!important;margin-right:auto!important}
+.bottomBar .bottomInfo strong,.bottomBar .bottomInfo span{overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}
+.bottomBar>a:not(:last-child){border-right:1px solid #ffffff0d!important;border-radius:14px!important}
+
+/* Avatar/decoration consistency everywhere. */
+.identity,.drawerProfile,.avatarDock,.bottomPic{overflow:visible!important}
+.identity img,.drawerProfile img,.mainAvatar,.bottomPic>img:first-child{display:block!important;object-fit:cover!important;object-position:center!important}
+.frame,.decoration,.bottomPic>img:nth-child(2){pointer-events:none!important;object-fit:contain!important}
+.bottomPic>img:nth-child(2){z-index:3!important}
+.bottomPic .liveDot{z-index:5!important}
+
+@media(max-width:900px){.rebuildPage{padding-left:15px;padding-right:15px}.rebuildHero{grid-template-columns:1fr;gap:55px;margin-top:70px}.heroText h1{font-size:clamp(58px,17vw,105px)}.discordCard{max-width:560px;width:100%;margin:auto}.workGrid{grid-template-columns:1fr 1fr}.socials{grid-template-columns:1fr}.tracking{display:none}.drawerTrigger{right:15px;top:78px}.statsFour{grid-template-columns:repeat(2,1fr);row-gap:15px}.upload>img{width:170px;height:105px}}
+@media(max-width:560px){.rebuildPage{padding-bottom:105px}.rebuildHero{margin-bottom:90px}.heroText{padding-right:5px}.tagline{font-size:20px}.bio{font-size:13px}.discordCard{padding-left:18px;padding-right:18px;border-radius:24px}.cardBanner{margin-left:-18px;margin-right:-18px;height:155px;border-radius:24px 24px 0 0}.avatarDock{width:128px;height:128px;margin-top:-64px}.mainAvatar{width:128px;height:128px}.frame{width:145px;height:145px;inset:-8px}.decoration{width:160px;height:160px;inset:-16px}.cardName h2{font-size:27px}.workGrid{grid-template-columns:1fr}.sectionHead h2{font-size:35px}.upload{align-items:flex-start}.upload>img{width:110px;height:85px}.upload h3{font-size:15px}.upload p{font-size:9px}.bottomBar{bottom:10px;min-height:62px;width:calc(100vw - 14px);gap:6px!important}.bottomBar>a{flex-basis:39px!important;width:39px!important;height:39px!important}.bottomPic,.bottomPic>img:first-child{width:42px;height:42px}.bottomInfo span{font-size:9px}.bottomInfo{margin-right:2px!important}.drawer{width:93vw}}
