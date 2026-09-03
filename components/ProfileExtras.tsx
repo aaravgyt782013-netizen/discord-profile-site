@@ -1,6 +1,5 @@
 "use client";
 
-import {useEffect,useState} from "react";
 import "./profile-extras.css";
 
 const features=[
@@ -17,20 +16,18 @@ const features=[
 const stack=["Next.js","React","TypeScript","Node.js","Python","Discord.js","REST APIs","GitHub","Vercel","Minecraft"];
 
 export default function ProfileExtras(){
- const [time,setTime]=useState(0);
- useEffect(()=>{const t=setInterval(()=>setTime(Date.now()),1000);return()=>clearInterval(t)},[]);
  return <>
   <section className="extrasShowcase" id="capabilities">
    <div className="extrasIntro">
-    <div><small>06 / CAPABILITY MATRIX</small><h2>Built for more than a profile.</h2><p>A cinematic feature layer inspired by the reference design — with animated cards, skill levels, live-feeling UI and a cleaner way to explore what gets built.</p></div>
-    <div className="extrasPulse"><i/><span>PROFILE SYSTEM</span><b>ONLINE</b><em>{time?"LIVE UI":"STARTING"}</em></div>
+    <div><small>06 / CAPABILITY MATRIX</small><h2>Built for more than a profile.</h2><p>A cinematic feature layer inspired by the reference design — with animated cards, skill levels and a cleaner way to explore what gets built.</p></div>
+    <div className="extrasPulse"><i/><span>PROFILE SYSTEM</span><b>SYSTEM READY</b><em>INTERACTIVE UI</em></div>
    </div>
-   <div className="featureGrid">{features.map(([icon,title,desc,level],i)=><article className={`featureCard ${i===1?"featured":""}`} key={title}><span className="featureIcon">{icon}</span><small>0{i+1}</small><h3>{title}</h3><p>{desc}</p><div className="level"><b>{level}</b><i><span style={{width:`${72+(i%4)*6}%`}}/></i></div></article>)}</div>
+   <div className="featureGrid">{features.map(([icon,title,desc,level],i)=><article className={`featureCard ${i===1?"featured":""}`} key={title}><span className="featureIcon">{icon}</span><small>0{i+1}</small><h3>{title}</h3><p>{desc}</p><div className="level"><b>{level}</b><i><span/></i></div></article>)}</div>
   </section>
 
   <section className="extrasStack" id="stack">
    <div className="extrasSectionTitle"><small>07 / TOOLKIT</small><h2>The stack behind the builds.</h2><p>Technologies and platforms used across projects.</p></div>
-   <div className="stackCloud">{stack.map((x,i)=><span key={x} style={{"--delay":`${i*0.18}s`} as React.CSSProperties}><i/>{x}</span>)}</div>
+   <div className="stackCloud">{stack.map(x=><span key={x}><i/>{x}</span>)}</div>
   </section>
 
   <section className="extrasTimeline" id="journey">
