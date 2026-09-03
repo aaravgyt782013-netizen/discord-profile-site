@@ -5,4 +5,5 @@ import "../components/profile-enhancements.css";
 import "../components/profile-wow.css";
 import "../components/profile-badge-polish.css";
 import "../components/profile-publish.css";
+// Keep the original profile design intact; fixes are applied without replacing the UI.
 export default function Home(){return <><ProfilePageV4/><ProfileEnhancements/><AlwaysOnline/></>}
